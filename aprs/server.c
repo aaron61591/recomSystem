@@ -8,9 +8,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#include "comm/netcommon.h"
+#include "comm/mynet.h"
 #include "comm/mybase.h"
-#include "comm/daemon.h"
+#include "comm/mydaemon.h"
 
 char fpath[50] = {0};
 char pidfile[50] = {0};
@@ -33,10 +33,11 @@ void run_lock() {
     FILE *fp;
     int pid = getpid();
     char pstr[5];
+    memset(pstr, 0, sizeof(pstr));
     sprintf(pstr, "%d", pid);
     if ((fp = fopen(pidfile, "w")) == NULL)
         err_exit("create pid file failed!");
-    fwrite(pstr, 1024, sizeof(pid), fp);
+    fwrite(pstr, sizeof(pstr), 1, fp);
     fclose(fp);
 }
 
@@ -45,16 +46,19 @@ void path_init() {
     /* get pid file path */
     getcwd(fpath, sizeof(fpath));
     strcpy(pidfile, fpath);
-    strcat(pidfile, "pid");
+    strcat(pidfile, "/pid");
 }
 
 void aprs_init() {
 
+    log_init();
+    set_log(get_log_fp());
     path_init();
     run_check();
     if(daemon_init("[aprs server]", LOG_DAEMON) != 0)
         err_exit("deamon init failed!");
     run_lock();
+    log_err("here");
 }
 
 int main () {
