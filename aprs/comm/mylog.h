@@ -5,46 +5,26 @@
     > Created Time: 2014年04月02日 星期三 21时43分53秒
  ************************************************************************/
 
-#ifndef MYLOG
+#ifndef _MYLOG_H_
+#define _MYLOG_H_
+
 #include <stdio.h>
+#include "mybase.h"
 
 #define MAXLOG 1024
 
 FILE *log_fp;
 
-void log_init() {
+int get_log_fp();
 
-    if (log_fp == NULL)
-        log_fp = fopen("log", "a");
-}
+void log_close();
 
-int get_log_fp() {
+void log_info(const char *info);
 
-    return fileno(log_fp);
-}
+void log_warn(const char *warn);
 
-void log_close() {
+void log_err(const char *err);
 
-    if (log_fp != NULL)
-        fclose(log_fp);
-}
-
-void log_info(const char *info) {
-
-    char date[DATELEN];
-    fprintf(log_fp, "[info] %s %s\n", date, info);
-}
-
-void log_warn(const char *warn) {
-
-    char date[DATELEN];
-    fprintf(log_fp, "[warn] %s %s\n", date, warn);
-}
-
-void log_err(const char *err) {
-
-    char date[DATELEN];
-    fprintf(log_fp, "[error] %s %s, errno:%d\n", date, err, errno);
-}
+void log_init(const char *fpath);
 
 #endif
