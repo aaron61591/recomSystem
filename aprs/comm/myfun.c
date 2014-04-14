@@ -41,9 +41,10 @@ int file_exist(const char *fname) {
 
 int get_char_num(const char *str, char c) {
 
-    int num;
-    while(1) {
-        if(str[num++] == c)
+    int num = 0;
+    int i = 0;
+    while(i != strlen(str)) {
+        if(str[i++] == c)
             ++num;
     }
     return num;

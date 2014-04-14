@@ -11,4 +11,4 @@ if [ -f pid ]; then
     rm log
 fi
 make
-make clean
+make clean 2> /dev/null

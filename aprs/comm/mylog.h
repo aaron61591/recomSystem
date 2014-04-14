@@ -21,6 +21,8 @@ void log_close();
 
 void log_info(const char *info);
 
+void log_int(int n);
+
 void log_warn(const char *warn);
 
 void log_err(const char *err);

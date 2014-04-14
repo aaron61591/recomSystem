@@ -1,0 +1,11 @@
+catch fork
+#b server.c:cli_handle
+#b server.c:148
+b server.c:get_respon
+b comm/myfun.c:get_char_num
+r
+set follow-fork-mode child
+set detach-on-fork off
+c
+c
+

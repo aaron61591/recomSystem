@@ -10,8 +10,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-#include "../comm/mynet.h"
-#include "../comm/mysig.h"
 #include "../comm/mybase.h"
 
 void dg_cli(FILE *fp, int sockfd, const struct sockaddr *pservaddr, socklen_t servlen) {
@@ -41,7 +39,8 @@ void dg_cli(FILE *fp, int sockfd, const struct sockaddr *pservaddr, socklen_t se
         }
         if (FD_ISSET(sockfd, &rset)) {
             if ((n = recvfrom(sockfd, &recv, MAXLINE, 0, NULL, NULL)) > 0) {
-                if ((n = write(fileno(fp), &recv, n)) < 0)
+                recv[n] = '\n';
+                if ((n = write(fileno(fp), &recv, n + 1)) < 0)
                     err_exit("write error");
                 memset(&recv, 0, sizeof(recv));
             } else

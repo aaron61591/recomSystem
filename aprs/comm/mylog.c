@@ -26,6 +26,13 @@ void log_info(const char *info) {
     fflush(log_fp);
 }
 
+void log_int(int n) {
+
+    char tmp[1024] = {0};
+    sprintf(tmp, "%d", n);
+    log_info(tmp);
+}
+
 void log_warn(const char *warn) {
 
     char date[DATELEN] = {0};

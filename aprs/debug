@@ -1,0 +1,4 @@
+./compile
+if [ $? -eq 0 ];then
+    gdb start -x debug_config
+fi

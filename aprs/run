@@ -1,11 +1,11 @@
 #########################################################################
-# File Name: shutdown.sh
+# File Name: run.sh
 # Author: Aaron
 # mail: Aaron@gmail.com
-# Created Time: 2014年04月03日 星期四 15时13分25秒
+# Created Time: 2014年04月11日 星期五 20时57分40秒
 #########################################################################
-#!/bin/base
-read line < pid
-kill $line
-rm pid
+#!/bin/bash
 
+./compile
+./start
+tailf log

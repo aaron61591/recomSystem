@@ -10,7 +10,6 @@
 #include <unistd.h>
 #include <syslog.h>
 #include "comm/mybase.h"
-#include "comm/mynet.h"
 
 char fpath[50] = {0};
 char pidpath[50] = {0};
@@ -24,11 +23,11 @@ int is_debug = 1;
 /* format get:uid */
 int get_req_type(const char *msg) {
 
-    int num;
+    int num = 0;
     num = get_char_num(msg, '|');
-    if (num == 0)
+    if (num == 1)
         return 0;
-    else if (num == 4)
+    else if (num == 5)
         return 1;
     else
         return -1;
@@ -49,16 +48,16 @@ void get_respon(const char *msg, char *resp) {
     }
 }
 
-void cli_handle(char *msg, struct sockaddr_in *cliaddr, int clilen) {
+void cli_handle(const char *msg, struct sockaddr_in *cliaddr, int clilen) {
 
+    char tmp[100] = {0};
     if (is_debug) {
-        char tmp[50];
         sprintf(tmp, "new request receive!");
         log_info(tmp);
     }
     char resp[100] = {0};
-    get_respon(msg, resp);
-    sendto(serv, resp, sizeof(resp), 0, (struct sockaddr *)cliaddr, clilen);
+    //get_respon(msg, resp);
+    int num = sendto(serv, resp, strlen(resp), 0, (struct sockaddr *)cliaddr, clilen);
     exit(0);
 }
 
@@ -140,6 +139,7 @@ int main () {
         int num, pid, clilen;
         clilen = sizeof(cliaddr);
         num = recvfrom(serv, &recvbuf, sizeof(recvbuf), 0, (struct sockaddr *)&cliaddr, &clilen);
+        recvbuf[num] = '\0';
         if ((pid = fork()) < 0)
             err_exit("handle new client failed!");
         else if (pid == 0)

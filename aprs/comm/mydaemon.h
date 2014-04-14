@@ -11,6 +11,14 @@
 #include <syslog.h>
 #include <fcntl.h>
 #include <stdlib.h>
+
+#include "mydaemon.h"
+#include "myexit.h"
+#include "myfun.h"
+#include "mylog.h"
+#include "mynet.h"
+#include "mysig.h"
+
 #define MAXFD 64
 
 extern int daemon_proc;

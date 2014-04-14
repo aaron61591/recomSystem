@@ -1,9 +1,12 @@
+CC = gcc
+CFLAGS = -g
+
 obj = server.o recom.o comm/myfun.o comm/mydaemon.o comm/mylog.o comm/mysig.o comm/myexit.o
 
 start : $(obj)
-	gcc -o start $(obj)
+	$(CC) $(CFLAGS) -o start $(obj)
 
-server.o : comm/mybase.h comm/mynet.h
+server.o : comm/mybase.h
 recom.o : comm/mybase.h
 comm/myfun.o : comm/myfun.h comm/mybase.h comm/mylog.h
 comm/mydaemon.o : comm/mydaemon.h

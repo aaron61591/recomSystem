@@ -13,6 +13,12 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "mydaemon.h"
+#include "myfun.h"
+#include "mylog.h"
+#include "mynet.h"
+#include "mysig.h"
+
 #define DATELEN 30
 
 typedef unsigned short unit8_t;
