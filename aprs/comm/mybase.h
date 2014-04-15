@@ -8,10 +8,12 @@
 #ifndef _MYBASE_H_
 #define _MYBASE_H_
 
+#include <stdio.h>
 #include <errno.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
+#include <unistd.h>
+#include <syslog.h>
 
 #include "mydaemon.h"
 #include "myfun.h"
@@ -23,5 +25,6 @@
 
 typedef unsigned short unit8_t;
 typedef unsigned int unit32_t;
+typedef unsigned long long unit64_t;
 
 #endif

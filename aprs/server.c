@@ -5,22 +5,16 @@
     > Created Time: 2014年04月02日 星期三 10时27分58秒
  ************************************************************************/
 
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-#include <syslog.h>
 #include "comm/mybase.h"
-
-char fpath[50] = {0};
-char pidpath[50] = {0};
-char logpath[50] = {0};
+#include "recom.h"
+#include "init.h"
 
 int serv;
 
 int is_debug = 1;
 
-/* format set:uid|pid|point1|point2|point3 */
-/* format get:uid */
+/* format get: 0|uid */
+/* format set: 1|uid|pid|point1|point2|point3 */
 int get_req_type(const char *msg) {
 
     int num = 0;
@@ -56,69 +50,9 @@ void cli_handle(const char *msg, struct sockaddr_in *cliaddr, int clilen) {
         log_info(tmp);
     }
     char resp[100] = {0};
-    //get_respon(msg, resp);
+    get_respon(msg, resp);
     int num = sendto(serv, resp, strlen(resp), 0, (struct sockaddr *)cliaddr, clilen);
     exit(0);
-}
-
-void run_check() {
-
-    if (file_exist(pidpath) == 0)
-        err_exit("aprs is already running now!");
-}
-
-void run_lock() {
-
-    FILE *fp;
-    int pid = getpid();
-    char pstr[5];
-    memset(pstr, 0, sizeof(pstr));
-    sprintf(pstr, "%d", pid);
-    if ((fp = fopen(pidpath, "w")) == NULL)
-        err_exit("create pid file failed!");
-    fwrite(pstr, sizeof(pstr), 1, fp);
-    fclose(fp);
-}
-
-void path_init() {
-
-    /* get pid file path */
-    getcwd(fpath, sizeof(fpath));
-    strcpy(pidpath, fpath);
-    strcat(pidpath, "/pid");
-    strcpy(logpath, fpath);
-    strcat(logpath, "/log");
-}
-
-void sig_chld(int signo) {
-
-    pid_t pid;
-    int stat;
-    while((pid = waitpid(-1, &stat, WNOHANG)
-) > 0){
-        printf("child %d terminated\n", pid);
-    }
-    return;
-}
-
-void aprs_init() {
-
-    path_init();
-
-    /* run lock */
-    run_check();
-
-    /* daemon running */
-    if(daemon_init("[aprs server]", LOG_DAEMON) != 0)
-        err_exit("deamon init failed!");
-    run_lock();
-
-    /* log initialize */
-    log_init(logpath);
-    set_log(get_log_fp());
-
-    /* handle son process */
-    signal(SIGCHLD, sig_chld);
 }
 
 int main () {

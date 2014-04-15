@@ -7,8 +7,8 @@
 #!/bin/bash
 
 if [ -f pid ]; then
-    ./shutdown
-    rm log
+    ./shutdown 2> /dev/null
+    rm log 2> /dev/null
 fi
 make
 make clean 2> /dev/null

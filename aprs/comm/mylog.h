@@ -8,7 +8,6 @@
 #ifndef _MYLOG_H_
 #define _MYLOG_H_
 
-#include <stdio.h>
 #include "mybase.h"
 
 #define MAXLOG 1024
