@@ -46,7 +46,7 @@ struct u_node* create_recom_matrix() {
     struct u_node *head;
 
     /* get orderly data */
-    int num;
+    int num = 0;
     struct recom_info *dp = get_recom_info(&num);
 
     if (num == 0)
@@ -72,6 +72,9 @@ struct u_node* create_recom_matrix() {
         append_p_node(up, pp);
     }
 
+    /* free recom_info */
+    while(0 != num--)
+        free(dp++);
     return head;
 }
 

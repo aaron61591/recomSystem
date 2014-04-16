@@ -14,7 +14,8 @@ struct recom_info {
 
     unit32_t u_id;
     unit32_t p_id;
-    unit8_t point;
+    unit8_t point1;
+    unit8_t point2;
 };
 
 

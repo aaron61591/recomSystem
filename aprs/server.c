@@ -11,6 +11,13 @@
 
 int serv;
 
+/*
+ * 0 : single
+ * 1 : multiple progress
+ * 2 : multiple thread
+ * */
+int run_mode = 0;
+
 int is_debug = 1;
 
 /* format get: 0|uid */
@@ -57,7 +64,7 @@ void cli_handle(const char *msg, struct sockaddr_in *cliaddr, int clilen) {
 
 int main () {
 
-    aprs_init();
+    aprs_init(&run_mode);
     char recvbuf[MAXLINE];
     struct sockaddr_in servaddr, cliaddr;
     memset(&servaddr, 0, sizeof(servaddr));
@@ -73,10 +80,15 @@ int main () {
         int num, pid, clilen;
         clilen = sizeof(cliaddr);
         num = recvfrom(serv, &recvbuf, sizeof(recvbuf), 0, (struct sockaddr *)&cliaddr, &clilen);
-        recvbuf[num] = '\0';
-        if ((pid = fork()) < 0)
-            err_exit("handle new client failed!");
-        else if (pid == 0)
+
+        /* handle client request by different mode */
+        if (run_mode == 0)
             cli_handle(recvbuf, &cliaddr, clilen);
+        else if (run_mode == 1 || run_mode == 2) {
+            if ((pid = fork()) < 0)
+                err_exit("handle new client failed!");
+            else if (pid == 0)
+            cli_handle(recvbuf, &cliaddr, clilen);
+        }
     }
 }
