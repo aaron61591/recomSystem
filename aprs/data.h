@@ -18,8 +18,11 @@ struct recom_info {
     unit8_t point2;
 };
 
-
 struct recom_info * get_recom_info(int *num);
+
+unit32_t* get_user_list(int *user_count);
+
+unit32_t* get_produced_list(int *produced_count);
 
 void set_recom(unit32_t u_id, unit32_t p_id, unit8_t point);
 

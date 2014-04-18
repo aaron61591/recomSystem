@@ -51,7 +51,7 @@ void sig_chld(int signo) {
     return;
 }
 
-void aprs_init(int *run_mode) {
+void aprs_init(int *run_mode, int argc, const char **argv) {
 
     path_init();
 
@@ -79,16 +79,10 @@ void aprs_init(int *run_mode) {
     if (argc == 1) {
         *run_mode = 0;
     } else {
-        switch(argv[1]) {
-            case "-mp":
-                *run_mode = 1;
-                break;
-            case "-mt":
-                *run_mode = 2;
-                break;
-            default:
-                *run_mode = 0;
-        }
+        if (!strcmp(argv[1], "-mp"))
+            *run_mode = 1;
+        else if (!strcmp(argv[1], "-mt"))
+            *run_mode = 2;
     }
 }
 

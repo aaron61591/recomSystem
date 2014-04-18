@@ -7,21 +7,9 @@
 #ifndef _RECOM_H_
 #define _RECOM_H_
 
+#include <math.h>
+
 #include "comm/mybase.h"
-
-struct u_node {
-
-    unit32_t u_id;
-    struct p_node *hp;
-    struct u_node *next;
-};
-
-struct p_node {
-
-    unit32_t p_id;
-    unit8_t point;
-    struct p_node *next;
-};
 
 void recom_init();
 

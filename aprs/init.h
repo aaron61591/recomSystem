@@ -11,6 +11,6 @@
 #include "comm/mybase.h"
 #include "recom.h"
 
-void aprs_init(int *run_mode);
+void aprs_init(int *run_mode, int argc, const char **argv);
 
 #endif

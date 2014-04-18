@@ -19,4 +19,8 @@ int file_exist(const char *fname);
 
 int get_char_num(const char *str, char c);
 
+void free_multi(void *p, size_t num);
+
+void* malloc_zero(int size);
+
 #endif

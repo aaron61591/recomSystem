@@ -9,7 +9,8 @@
 #include "recom.h"
 #include "init.h"
 
-int serv;
+/* aprs server listen port */
+int aprs_port = 61591;
 
 /*
  * 0 : single
@@ -18,6 +19,7 @@ int serv;
  * */
 int run_mode = 0;
 
+/* if debug mode (print debug log) */
 int is_debug = 1;
 
 /* format get: 0|uid */
@@ -49,6 +51,9 @@ void get_respon(const char *msg, char *resp) {
     }
 }
 
+/* aprs server file descriptor */
+int serv;
+
 void cli_handle(const char *msg, struct sockaddr_in *cliaddr, int clilen) {
 
     char tmp[100] = {0};
@@ -62,15 +67,17 @@ void cli_handle(const char *msg, struct sockaddr_in *cliaddr, int clilen) {
     exit(0);
 }
 
-int main () {
+int main (int argc, const char *argv[]) {
 
-    aprs_init(&run_mode);
+    /* initailize aprs server*/
+    aprs_init(&run_mode, argc, argv);
+
     char recvbuf[MAXLINE];
     struct sockaddr_in servaddr, cliaddr;
     memset(&servaddr, 0, sizeof(servaddr));
     memset(&cliaddr, 0, sizeof(cliaddr));
     servaddr.sin_family = AF_INET;
-    servaddr.sin_port = htons(61591);
+    servaddr.sin_port = htons(aprs_port);
     servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
     serv = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (bind(serv, (const struct sockaddr *)&servaddr, sizeof(servaddr)) != 0) {

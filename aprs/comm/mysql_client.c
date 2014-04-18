@@ -7,11 +7,11 @@
 
 #include "mysql_client.h"
 
-const char host[] = "127.0.0.1";
-const int port = 3306;
-const char username[] = "root";
-const char password[] = "root";
-const char dbname[] = "aprs";
+const char my_mysql_host[] = "127.0.0.1";
+const int my_mysql_port = 3306;
+const char my_mysql_username[] = "root";
+const char my_mysql_password[] = "root";
+const char my_dbname[] = "aprs";
 
 MYSQL_RES* MYSQL_QUERY(const char *query) {
 
@@ -19,7 +19,7 @@ MYSQL_RES* MYSQL_QUERY(const char *query) {
     MYSQL_RES *result = NULL;
     mysql_init(&my_con);
     int res;
-    if (mysql_real_connect(&my_con, host, username, password, dbname, port, NULL, 0)) {
+    if (mysql_real_connect(&my_con, my_mysql_host, my_mysql_username, my_mysql_password, my_dbname, my_mysql_port, NULL, 0)) {
         res = mysql_query(&my_con, query);
         if (!res) {
             result = mysql_store_result(&my_con);
