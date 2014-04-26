@@ -8,16 +8,8 @@
 #ifndef _MYDAEMON_H_
 #define _MYDAEMON_H_
 
-#include <syslog.h>
-#include <fcntl.h>
-#include <stdlib.h>
-
+#include "mybase.h"
 #include "mydaemon.h"
-#include "myexit.h"
-#include "myfun.h"
-#include "mylog.h"
-#include "mynet.h"
-#include "mysig.h"
 
 #define MAXFD 64
 

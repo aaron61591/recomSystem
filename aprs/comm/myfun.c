@@ -50,13 +50,6 @@ int get_char_num(const char *str, char c) {
     return num;
 }
 
-void free_multi(void *p, size_t num) {
-
-    while(0 != --num) {
-        free(++p);
-    }
-}
-
 void* malloc_zero(int size) {
 
     void *tp = malloc(size);

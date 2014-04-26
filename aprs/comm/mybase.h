@@ -14,17 +14,24 @@
 #include <string.h>
 #include <unistd.h>
 #include <syslog.h>
+#include <math.h>
+#include <time.h>
+#include <fcntl.h>
 
+typedef unsigned long long unit64_t;
+typedef unsigned short unit8_t;
+typedef unsigned int unit32_t;
+
+#include "myexit.h"
+#include "mylog.h"
 #include "mydaemon.h"
 #include "myfun.h"
-#include "mylog.h"
 #include "mynet.h"
 #include "mysig.h"
 
 #define DATELEN 30
 
-typedef unsigned short unit8_t;
-typedef unsigned int unit32_t;
-typedef unsigned long long unit64_t;
+/* if debug mode (print debug log) */
+#define IS_DEBUG 0
 
 #endif

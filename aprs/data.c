@@ -19,16 +19,13 @@ struct recom_info * get_recom_info(int *num) {
         /* get row num */
         *num = mysql_num_rows(res);
 
-        /* apply for space */
-        int size = sizeof(struct recom_info) * *num;
-        struct recom_info *recom = malloc(size);
-        memset(recom, 0, size);
+        struct recom_info *recom = malloc_zero(sizeof(struct recom_info) * *num);
 
         /* get field id*/
         int field_uid = get_field_id(res, "USER_ID");
         int field_pid = get_field_id(res, "PRO_ID");
         int field_point1 = get_field_id(res, "POINT1");
-        int field_point2 = get_field_id(res, "POINT1");
+        int field_point2 = get_field_id(res, "POINT2");
         if (field_uid == -1 || field_pid == -1 || field_uid == -1) {
             log_err("field name error");
             return NULL;
@@ -65,10 +62,7 @@ unit32_t* get_user_list(int *user_count) {
         /* get user_count */
         *user_count = mysql_num_rows(res);
 
-        /* apply for space */
-        int size = sizeof(unit32_t) * *user_count;
-        user_list = malloc(size);
-        memset(user_list, 0, size);
+        user_list = malloc_zero(sizeof(unit32_t) * *user_count);
 
         /* get field id */
         int field_id = get_field_id(res, "ID");
@@ -102,10 +96,7 @@ unit32_t* get_produced_list(int *produced_count) {
         /* get produced_count */
         *produced_count = mysql_num_rows(res);
 
-        /* apply for space */
-        int size = sizeof(unit32_t) * *produced_count;
-        produced_list = malloc(size);
-        memset(produced_list, 0, size);
+        produced_list = malloc_zero(sizeof(unit32_t) * *produced_count);
 
         /* get field id */
         int field_id = get_field_id(res, "ID");

@@ -5,7 +5,7 @@ obj = server.o recom.o init.o data.o \
 	comm/mysql_client.o comm/myfun.o comm/mydaemon.o comm/mylog.o comm/mysig.o comm/myexit.o
 
 start : $(obj)
-	$(CC) $(CFLAGS) -o start $(obj) -lmysqlclient
+	$(CC) $(CFLAGS) -o start $(obj) -lmysqlclient -lm
 
 server.o : init.h recom.h comm/mybase.h
 recom.o : recom.h data.h comm/mybase.h

@@ -7,9 +7,16 @@
 #ifndef _RECOM_H_
 #define _RECOM_H_
 
-#include <math.h>
 
 #include "comm/mybase.h"
+
+#define REFRESH_TIME 15 * 60
+
+struct nb_info {
+
+    unit32_t p_index;
+    double pearson;
+};
 
 void recom_init();
 

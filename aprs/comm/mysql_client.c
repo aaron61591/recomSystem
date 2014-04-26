@@ -11,6 +11,7 @@ const char my_mysql_host[] = "127.0.0.1";
 const int my_mysql_port = 3306;
 const char my_mysql_username[] = "root";
 const char my_mysql_password[] = "root";
+//const char my_dbname[] = "aprs_test";
 const char my_dbname[] = "aprs";
 
 MYSQL_RES* MYSQL_QUERY(const char *query) {
