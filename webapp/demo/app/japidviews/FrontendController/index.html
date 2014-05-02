@@ -1,0 +1,121 @@
+`import java.util.List;
+`import com.aaronpages.info.dto.TravelInfo;
+`import com.aaronpages.info.dto.TravelInfo.InfoOrder;
+`args  List<TravelInfo> list, List<TravelInfo> recoms
+
+<html>
+	<head>
+		<title>旅游网站demo</title>
+	</head>
+	<link href="css/init.css" rel="stylesheet" type="text/css" />
+	<link href="css/main.css" rel="stylesheet" type="text/css" />
+	<link href="css/font.css" rel="stylesheet" type="text/css" />
+	<body>
+		<main>
+			<header>
+				<logo>DEMO旅游网</logo>
+				<column1>首页</column1>
+				<column>攻略</column>
+				<column>游记</column>
+			</header>
+			<show>
+				<info_opt>
+					<opt_font1>旅游景点：</opt_font1>
+					<a href="http://localhost:9000/index?order=POINT"><opt_font2>好评</opt_font2></a>
+					<a href="http://localhost:9000/index?order=CLICK"><opt_font2>热度</opt_font2></a>
+					<a href="http://localhost:9000/index?order=TIME"><opt_font2>时间</opt_font2></a>
+				</info_opt>
+				`for(int i = 0; i < list.size(); ++i) {
+					`if (list.get(i) != null) {
+					<info>
+						<picture>
+							<img class="info_img" src="../image/background.png"/>
+						</picture>
+						<content>
+							<detail_head>${list.get(i).getShowName()}</detail_head>
+							<detail1>
+								<detail_font1>作者：</detail_font1>
+								<detail_font2>Aaron</detail_font2>
+								<detail_font3>04-30 02:11</detail_font3>
+								<detail_font4>${list.get(i).getClickNum()}/${list.get(i).getLikeNum()}</detail_font4>
+							</detail1>
+							<detail2>${list.get(i).getShowContent()}</detail2>
+						</content>
+					</info>
+					`}
+				`}
+				<page>
+					<page_font>上一页</page_font>
+					<page_font>下一页</page_font>
+				</page>
+			</show>
+			<recommend>
+				<recom_page>
+					<recom_opt1>猜你喜欢：</recom_opt1>
+					<recom_opt2>换一换</recom_opt2>
+				</recom_page>
+				<recom_info>
+					<recom_image>
+						<img class="info_img" src="../image/background.png"/>
+					</recom_image>
+					<recom_title>
+						<recom_tittle_font>西藏</recom_tittle_font>
+						<detail_font4>26/1</detail_font4>
+					</recom_title>
+					<recom_detail>
+						<recom_content_font>总述: 天津 出发。 2008年，老爸乘火车去了一趟西藏...</recom_content_font>
+					</recom_detail>
+				</recom_info>
+				<recom_info>
+					<recom_image>
+						<img class="info_img" src="../image/background.png"/>
+					</recom_image>
+					<recom_title>
+						<recom_tittle_font>西藏</recom_tittle_font>
+						<detail_font4>26/1</detail_font4>
+					</recom_title>
+					<recom_detail>
+						<recom_content_font>总述: 天津 出发。 2008年，老爸乘火车去了一趟西藏...</recom_content_font>
+					</recom_detail>
+				</recom_info>
+				<recom_info>
+					<recom_image>
+						<img class="info_img" src="../image/background.png"/>
+					</recom_image>
+					<recom_title>
+						<recom_tittle_font>西藏</recom_tittle_font>
+						<detail_font4>26/1</detail_font4>
+					</recom_title>
+					<recom_detail>
+						<recom_content_font>总述: 天津 出发。 2008年，老爸乘火车去了一趟西藏...</recom_content_font>
+					</recom_detail>
+				</recom_info>
+				<recom_info>
+					<recom_image>
+						<img class="info_img" src="../image/background.png"/>
+					</recom_image>
+					<recom_title>
+						<recom_tittle_font>西藏</recom_tittle_font>
+						<detail_font4>26/1</detail_font4>
+					</recom_title>
+					<recom_detail>
+						<recom_content_font>总述: 天津 出发。 2008年，老爸乘火车去了一趟西藏...</recom_content_font>
+					</recom_detail>
+				</recom_info>
+				<recom_info>
+					<recom_image>
+						<img class="info_img" src="../image/background.png"/>
+					</recom_image>
+					<recom_title>
+						<recom_tittle_font>西藏</recom_tittle_font>
+						<detail_font4>26/1</detail_font4>
+					</recom_title>
+					<recom_detail>
+						<recom_content_font>总述: 天津 出发。 2008年，老爸乘火车去了一趟西藏...</recom_content_font>
+					</recom_detail>
+				</recom_info>
+			</recommend>
+		</main>
+		<footer>Copyright © 2014-2014 Aaron_P</footer>
+	</body>
+</html>

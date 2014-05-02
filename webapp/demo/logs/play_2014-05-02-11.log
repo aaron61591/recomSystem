@@ -1,0 +1,166 @@
+2014-05-02 11:43:24 [play]-[INFO] Starting /var/project/recomSystem/webapp/demo -(:289)
+2014-05-02 11:43:24 [play]-[INFO] UJapidPlugin starting... -(:289)
+2014-05-02 11:43:24 [play]-[INFO] Clear java source files of UJapid. -(:289)
+2014-05-02 11:43:24 [play]-[WARN] You're running Play! in DEV mode -(:344)
+2014-05-02 11:43:24 [play]-[INFO] Listening for HTTP on port 9000 (Waiting a first request to start) ... -(:289)
+2014-05-02 11:43:28 [net.spy.memcached.MemcachedConnection]-[INFO] Added {QA sa=localhost/127.0.0.1:9922, #Rops=0, #Wops=0, #iq=0, topRop=null, topWop=null, toWrite=0, interested=0} to connect queue -(:?)
+2014-05-02 11:43:28 [play]-[INFO] Connected to memcached -(:289)
+2014-05-02 11:43:28 [net.spy.memcached.MemcachedConnection]-[INFO] Connection state changed for sun.nio.ch.SelectionKeyImpl@1073e42 -(:?)
+2014-05-02 11:43:28 [play]-[INFO] Connected to jdbc:mysql://localhost:3306/aprs_test?useUnicode=yes&characterEncoding=UTF-8&connectionCollation=utf8_general_ci -(:289)
+2014-05-02 11:43:29 [play]-[INFO] Guice injector created: com.aaronpages.config.GuicyDummy -(:289)
+2014-05-02 11:43:29 [play]-[INFO] Application 'demo' is now started ! -(:289)
+2014-05-02 11:43:30 [net.spy.memcached.MemcachedClient]-[INFO] Shut down memcached client -(:?)
+2014-05-02 11:43:30 [net.spy.memcached.MemcachedConnection]-[INFO] Added {QA sa=localhost/127.0.0.1:9922, #Rops=0, #Wops=0, #iq=0, topRop=null, topWop=null, toWrite=0, interested=0} to connect queue -(:?)
+2014-05-02 11:43:30 [play]-[INFO] Connected to memcached -(:289)
+2014-05-02 11:43:30 [net.spy.memcached.MemcachedConnection]-[INFO] Connection state changed for sun.nio.ch.SelectionKeyImpl@1bf194f -(:?)
+2014-05-02 11:43:30 [play]-[INFO] Guice injector created: com.aaronpages.config.GuicyDummy -(:289)
+2014-05-02 11:43:30 [play]-[ERROR] 
+
+@6i4jcjikd
+css.font.css action not found
+
+Action not found
+Action css.font.css could not be found. Error raised is Controller controllers.css.font not found
+ -(:570)
+play.exceptions.ActionNotFoundException: Action css.font.css not found
+	at play.mvc.ActionInvoker.getActionMethod(ActionInvoker.java:590)
+	at play.mvc.ActionInvoker.resolve(ActionInvoker.java:85)
+	at Invocation.HTTP Request(Play!)
+Caused by: java.lang.Exception: Controller controllers.css.font not found
+	... 3 more
+2014-05-02 11:43:31 [play]-[ERROR] 
+
+@6i4jcjike
+image.background.png action not found
+
+Action not found
+Action image.background.png could not be found. Error raised is Controller controllers.image.background not found
+ -(:570)
+play.exceptions.ActionNotFoundException: Action image.background.png not found
+	at play.mvc.ActionInvoker.getActionMethod(ActionInvoker.java:590)
+	at play.mvc.ActionInvoker.resolve(ActionInvoker.java:85)
+	at Invocation.HTTP Request(Play!)
+Caused by: java.lang.Exception: Controller controllers.image.background not found
+	... 3 more
+2014-05-02 11:43:31 [play]-[ERROR] 
+
+@6i4jcjikf
+css.init.css action not found
+
+Action not found
+Action css.init.css could not be found. Error raised is Controller controllers.css.init not found
+ -(:570)
+play.exceptions.ActionNotFoundException: Action css.init.css not found
+	at play.mvc.ActionInvoker.getActionMethod(ActionInvoker.java:590)
+	at play.mvc.ActionInvoker.resolve(ActionInvoker.java:85)
+	at Invocation.HTTP Request(Play!)
+Caused by: java.lang.Exception: Controller controllers.css.init not found
+	... 3 more
+2014-05-02 11:43:31 [play]-[ERROR] 
+
+@6i4jcjikg
+css.main.css action not found
+
+Action not found
+Action css.main.css could not be found. Error raised is Controller controllers.css.main not found
+ -(:570)
+play.exceptions.ActionNotFoundException: Action css.main.css not found
+	at play.mvc.ActionInvoker.getActionMethod(ActionInvoker.java:590)
+	at play.mvc.ActionInvoker.resolve(ActionInvoker.java:85)
+	at Invocation.HTTP Request(Play!)
+Caused by: java.lang.Exception: Controller controllers.css.main not found
+	... 3 more
+2014-05-02 11:43:43 [play]-[ERROR] 
+
+@6i4jcjikh
+css.init.css action not found
+
+Action not found
+Action css.init.css could not be found. Error raised is Controller controllers.css.init not found
+ -(:570)
+play.exceptions.ActionNotFoundException: Action css.init.css not found
+	at play.mvc.ActionInvoker.getActionMethod(ActionInvoker.java:590)
+	at play.mvc.ActionInvoker.resolve(ActionInvoker.java:85)
+	at Invocation.HTTP Request(Play!)
+Caused by: java.lang.Exception: Controller controllers.css.init not found
+	... 3 more
+2014-05-02 11:43:43 [play]-[ERROR] 
+
+@6i4jcjiki
+css.main.css action not found
+
+Action not found
+Action css.main.css could not be found. Error raised is Controller controllers.css.main not found
+ -(:570)
+play.exceptions.ActionNotFoundException: Action css.main.css not found
+	at play.mvc.ActionInvoker.getActionMethod(ActionInvoker.java:590)
+	at play.mvc.ActionInvoker.resolve(ActionInvoker.java:85)
+	at Invocation.HTTP Request(Play!)
+Caused by: java.lang.Exception: Controller controllers.css.main not found
+	... 3 more
+2014-05-02 11:43:43 [play]-[ERROR] 
+
+@6i4jcjikj
+image.background.png action not found
+
+Action not found
+Action image.background.png could not be found. Error raised is Controller controllers.image.background not found
+ -(:570)
+play.exceptions.ActionNotFoundException: Action image.background.png not found
+	at play.mvc.ActionInvoker.getActionMethod(ActionInvoker.java:590)
+	at play.mvc.ActionInvoker.resolve(ActionInvoker.java:85)
+	at Invocation.HTTP Request(Play!)
+Caused by: java.lang.Exception: Controller controllers.image.background not found
+	... 3 more
+2014-05-02 11:43:43 [play]-[ERROR] 
+
+@6i4jcjikk
+css.font.css action not found
+
+Action not found
+Action css.font.css could not be found. Error raised is Controller controllers.css.font not found
+ -(:570)
+play.exceptions.ActionNotFoundException: Action css.font.css not found
+	at play.mvc.ActionInvoker.getActionMethod(ActionInvoker.java:590)
+	at play.mvc.ActionInvoker.resolve(ActionInvoker.java:85)
+	at Invocation.HTTP Request(Play!)
+Caused by: java.lang.Exception: Controller controllers.css.font not found
+	... 3 more
+2014-05-02 11:43:49 [play]-[ERROR] 
+
+@6i4jcjikl
+css.init.css action not found
+
+Action not found
+Action css.init.css could not be found. Error raised is Controller controllers.css.init not found
+ -(:570)
+play.exceptions.ActionNotFoundException: Action css.init.css not found
+	at play.mvc.ActionInvoker.getActionMethod(ActionInvoker.java:590)
+	at play.mvc.ActionInvoker.resolve(ActionInvoker.java:85)
+	at Invocation.HTTP Request(Play!)
+Caused by: java.lang.Exception: Controller controllers.css.init not found
+	... 3 more
+2014-05-02 11:45:36 [play]-[WARN] The path for a staticDir route must end with / (GET /css -> staticDir:public:stylesheets) -(:344)
+2014-05-02 11:45:36 [play]-[WARN] The path for a staticDir route must end with / (GET /image -> staticDir:public:images) -(:344)
+2014-05-02 11:46:03 [play]-[WARN] The path for a staticDir route must end with / (GET /css -> staticDir:public/stylesheets) -(:344)
+2014-05-02 11:46:03 [play]-[WARN] The path for a staticDir route must end with / (GET /image -> staticDir:public/images) -(:344)
+2014-05-02 11:51:41 [play]-[INFO] Starting /var/project/recomSystem/webapp/demo -(:289)
+2014-05-02 11:51:42 [play]-[INFO] UJapidPlugin starting... -(:289)
+2014-05-02 11:51:42 [play]-[INFO] Clear java source files of UJapid. -(:289)
+2014-05-02 11:51:42 [play]-[WARN] You're running Play! in DEV mode -(:344)
+2014-05-02 11:51:42 [play]-[INFO] Listening for HTTP on port 9000 (Waiting a first request to start) ... -(:289)
+2014-05-02 11:51:47 [play]-[WARN] The path for a staticDir route must end with / (GET /css -> staticDir:public/stylesheets) -(:344)
+2014-05-02 11:51:47 [play]-[WARN] The path for a staticDir route must end with / (GET /image -> staticDir:public/images) -(:344)
+2014-05-02 11:51:47 [net.spy.memcached.MemcachedConnection]-[INFO] Added {QA sa=localhost/127.0.0.1:9922, #Rops=0, #Wops=0, #iq=0, topRop=null, topWop=null, toWrite=0, interested=0} to connect queue -(:?)
+2014-05-02 11:51:47 [play]-[INFO] Connected to memcached -(:289)
+2014-05-02 11:51:47 [net.spy.memcached.MemcachedConnection]-[INFO] Connection state changed for sun.nio.ch.SelectionKeyImpl@cdca66 -(:?)
+2014-05-02 11:51:48 [play]-[INFO] Connected to jdbc:mysql://localhost:3306/aprs_test?useUnicode=yes&characterEncoding=UTF-8&connectionCollation=utf8_general_ci -(:289)
+2014-05-02 11:51:49 [play]-[INFO] Guice injector created: com.aaronpages.config.GuicyDummy -(:289)
+2014-05-02 11:51:49 [play]-[INFO] Application 'demo' is now started ! -(:289)
+2014-05-02 11:53:21 [net.spy.memcached.MemcachedClient]-[INFO] Shut down memcached client -(:?)
+2014-05-02 11:53:21 [play]-[WARN] The path for a staticDir route must end with / (GET /css -> staticDir:public/stylesheets) -(:344)
+2014-05-02 11:53:21 [play]-[WARN] The path for a staticDir route must end with / (GET /image -> staticDir:public/images) -(:344)
+2014-05-02 11:53:21 [net.spy.memcached.MemcachedConnection]-[INFO] Added {QA sa=localhost/127.0.0.1:9922, #Rops=0, #Wops=0, #iq=0, topRop=null, topWop=null, toWrite=0, interested=0} to connect queue -(:?)
+2014-05-02 11:53:21 [play]-[INFO] Connected to memcached -(:289)
+2014-05-02 11:53:21 [net.spy.memcached.MemcachedConnection]-[INFO] Connection state changed for sun.nio.ch.SelectionKeyImpl@b5c294 -(:?)
+2014-05-02 11:53:21 [play]-[INFO] Guice injector created: com.aaronpages.config.GuicyDummy -(:289)
