@@ -1,7 +1,7 @@
-`import java.util.List;
 `import com.aaronpages.info.dto.TravelInfo;
 `import com.aaronpages.info.dto.TravelInfo.InfoOrder;
-`args  List<TravelInfo> list, List<TravelInfo> recoms
+ 
+`args  List<TravelInfo> list, List<TravelInfo> recoms, InfoOrder order, int page, TravelInfo detail
 
 <html>
 	<head>
@@ -12,27 +12,35 @@
 	<link href="css/font.css" rel="stylesheet" type="text/css" />
 	<body>
 		<main>
+			<head_decorate>test</head_decorate>
 			<header>
 				<logo>DEMO旅游网</logo>
-				<column1>首页</column1>
+				<a href="../index"><column1>首页</column1></a>
 				<column>攻略</column>
 				<column>游记</column>
 			</header>
+			<decorate>
+				<decorate1></decorate1>
+				<decorate2></decorate2>
+				<div style="clear: both;"></div>
+			</decorate>
 			<show>
+				`if (detail == null) {
 				<info_opt>
 					<opt_font1>旅游景点：</opt_font1>
 					<a href="http://localhost:9000/index?order=POINT"><opt_font2>好评</opt_font2></a>
 					<a href="http://localhost:9000/index?order=CLICK"><opt_font2>热度</opt_font2></a>
 					<a href="http://localhost:9000/index?order=TIME"><opt_font2>时间</opt_font2></a>
 				</info_opt>
+				`if (list != null)
 				`for(int i = 0; i < list.size(); ++i) {
 					`if (list.get(i) != null) {
 					<info>
 						<picture>
-							<img class="info_img" src="../image/background.png"/>
+							<img class="info_img" src="${list.get(i).getImagePath()}"/>
 						</picture>
 						<content>
-							<detail_head>${list.get(i).getShowName()}</detail_head>
+							<a href="../detail?id=${list.get(i).getId()}"><detail_head>${list.get(i).getShowName()}</detail_head></a>
 							<detail1>
 								<detail_font1>作者：</detail_font1>
 								<detail_font2>Aaron</detail_font2>
@@ -45,76 +53,62 @@
 					`}
 				`}
 				<page>
-					<page_font>上一页</page_font>
-					<page_font>下一页</page_font>
+					`if(page > 1) {
+					<a href="../index?page=${page - 1}&order=${order}"><page_font>上一页</page_font></a>
+					`}
+					`if (page == 0) page += 1;
+					<a href="../index?page=${page + 1}&order=${order}"><page_font>下一页</page_font></a>
 				</page>
+				`} else {
+					<detail_title>
+						<detail_title_font>${detail.getName()}</detail_title_font>
+						<detail_font5>${detail.getClickNum()}/${detail.getLikeNum()}</detail_font5>
+						<detail_font7 style="margin-left: 30px; font-size: 15px;">作者：</detail_font1>
+						<detail_font8 style="font-size: 15px;">Aaron</detail_font2>
+						<detail_font9 style="font-size: 15px;">04-30 02:11</detail_font3>
+						<a href="../like?id=${detail.getId()}">
+							<img class="detail_like" src="../image/like.jpg"/>
+							<detail_font6>喜欢</detail_font6>
+						</a>
+					</detail_title>
+					<detail_img>
+						<img style="height: 100%; width: 500px; margin-left: 30px;" src="${detail.getImagePath()}"/>
+					</detail_img>
+					<detail_content>${detail.getContent()}</detail_content>
+				`}
 			</show>
 			<recommend>
 				<recom_page>
 					<recom_opt1>猜你喜欢：</recom_opt1>
-					<recom_opt2>换一换</recom_opt2>
+					`if (detail == null) {
+						<a href="../reRecom?order=${order}&page=${page}"><recom_opt2>换一换</recom_opt2></a>
+					`} else {
+						<a href="../reRecom?id=${detail.getId()}"><recom_opt2>换一换</recom_opt2></a>
+					`}
+					
 				</recom_page>
-				<recom_info>
-					<recom_image>
-						<img class="info_img" src="../image/background.png"/>
-					</recom_image>
-					<recom_title>
-						<recom_tittle_font>西藏</recom_tittle_font>
-						<detail_font4>26/1</detail_font4>
-					</recom_title>
-					<recom_detail>
-						<recom_content_font>总述: 天津 出发。 2008年，老爸乘火车去了一趟西藏...</recom_content_font>
-					</recom_detail>
-				</recom_info>
-				<recom_info>
-					<recom_image>
-						<img class="info_img" src="../image/background.png"/>
-					</recom_image>
-					<recom_title>
-						<recom_tittle_font>西藏</recom_tittle_font>
-						<detail_font4>26/1</detail_font4>
-					</recom_title>
-					<recom_detail>
-						<recom_content_font>总述: 天津 出发。 2008年，老爸乘火车去了一趟西藏...</recom_content_font>
-					</recom_detail>
-				</recom_info>
-				<recom_info>
-					<recom_image>
-						<img class="info_img" src="../image/background.png"/>
-					</recom_image>
-					<recom_title>
-						<recom_tittle_font>西藏</recom_tittle_font>
-						<detail_font4>26/1</detail_font4>
-					</recom_title>
-					<recom_detail>
-						<recom_content_font>总述: 天津 出发。 2008年，老爸乘火车去了一趟西藏...</recom_content_font>
-					</recom_detail>
-				</recom_info>
-				<recom_info>
-					<recom_image>
-						<img class="info_img" src="../image/background.png"/>
-					</recom_image>
-					<recom_title>
-						<recom_tittle_font>西藏</recom_tittle_font>
-						<detail_font4>26/1</detail_font4>
-					</recom_title>
-					<recom_detail>
-						<recom_content_font>总述: 天津 出发。 2008年，老爸乘火车去了一趟西藏...</recom_content_font>
-					</recom_detail>
-				</recom_info>
-				<recom_info>
-					<recom_image>
-						<img class="info_img" src="../image/background.png"/>
-					</recom_image>
-					<recom_title>
-						<recom_tittle_font>西藏</recom_tittle_font>
-						<detail_font4>26/1</detail_font4>
-					</recom_title>
-					<recom_detail>
-						<recom_content_font>总述: 天津 出发。 2008年，老爸乘火车去了一趟西藏...</recom_content_font>
-					</recom_detail>
-				</recom_info>
+				`if (recoms != null) {
+				`for (int i = 0; i < recoms.size(); ++i) {
+					`if (recoms.get(i) != null) {	
+					<recom_info>
+						<recom_image>
+							<img class="info_img" src="${recoms.get(i).getImagePath()}"/>
+						</recom_image>
+						<recom_title>
+							<a href="../detail?id=${recoms.get(i).getId()}">
+								<recom_tittle_font>${recoms.get(i).getRemName()}</recom_tittle_font>
+							</a>
+							<detail_font4>${recoms.get(i).getClickNum()}/${recoms.get(i).getLikeNum()}</detail_font4>
+						</recom_title>
+						<recom_detail>
+							<recom_content_font>${recoms.get(i).getRemContent()}</recom_content_font>
+						</recom_detail>
+					</recom_info>
+					`}
+					`}
+				`}
 			</recommend>
+			<div style="clear: both;"></div>
 		</main>
 		<footer>Copyright © 2014-2014 Aaron_P</footer>
 	</body>

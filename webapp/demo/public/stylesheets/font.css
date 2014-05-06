@@ -10,8 +10,7 @@ column1 {
 	font-weight: bold;
 	font-size: 20px;
 	font-family:"微软雅黑,宋体";
-	color: #FFCABE;
-	//color: #FDF5A1;
+	color: #FFFFFF;
 }
 
 column {
@@ -57,6 +56,35 @@ detail_font4 {
 	color: #f47400;
 }
 
+detail_font5 {
+	font-size: 20px;
+	margin-left: 15px;
+	color: #f47400;
+}
+
+detail_font6 {
+	font-size: 15px;
+	//margin-left: 15px;
+	color: #118FEA;
+	font-weight: bold;
+}
+
+detail_font7 {
+	font-size: 15px;
+	margin-left: 20px;
+	color: #333;
+}
+
+detail_font8 {
+	font-size: 15px;
+	color: #007ed9;
+}
+
+detail_font9 {
+	font-size: 15px;
+	margin-left: 15px;
+	color: #666;
+}
 .current {
 	color: #666;
 }
@@ -81,7 +109,7 @@ recom_opt2 {
 recom_tittle_font {
 	margin-left: 10px;
 	margin-top: 5px;
-	font-size: 17px;
+	font-size: 15px;
 	color: #007ed9;
 }
 
@@ -98,4 +126,10 @@ recom_content_font {
 page_font {
 	font-size: 10px;
 	padding-left: 20px;
+}
+
+detail_title_font {
+	font-size: 30px;
+	font-weight: bold;
+	margin: 20px;
 }

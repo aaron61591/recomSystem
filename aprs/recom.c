@@ -11,19 +11,14 @@
 /* recom_matrix */
 unit8_t *recom_matrix = NULL;
 
-/* user, produced list */
 unit32_t *user_list = NULL, *produced_list = NULL;
 
-/* user, produced index */
 unit32_t *user_index = NULL, *produced_index = NULL;
 
-/* max id */
 unit32_t max_p_id = 0, max_u_id = 0;
 
-/* user, produced count */
 unit32_t user_count = 0, produced_count = 0;
 
-/* neighbor cache */
 struct nb_info **neighbor_cache = NULL;
 
 void init_user() {
@@ -141,6 +136,126 @@ void recom_refresh (int signo) {
     recom_init();
 }
 
+double get_distance(struct cluster *clus, unit32_t p_index) {
+
+    double dis = 0;
+    for(unit32_t i = 0; i < user_count; ++i) {
+        double t = get_point(i, p_index) - clus->centre[i];
+        dis += t * t;
+    }
+    return sqrt(dis);
+}
+
+unit8_t update_centre(double *centre, double *new_centre) {
+
+    unit8_t is_change = 0;
+    for (unit32_t i = 0; i < user_count; ++i) {
+        if (centre[i] != new_centre[i]) {
+            centre[i] = new_centre[i];
+            is_change = 1;
+        }
+    }
+    return is_change;
+}
+
+unit32_t get_clus_index(unit32_t p_index) {
+
+    return clus_index[p_index];
+}
+
+void set_clus_index(unit32_t p_index, unit32_t c_id) {
+
+    clus_index[p_index] = c_id;
+}
+
+void init_kmeans() {
+
+    /* calculate the cluster num */
+    clus_num = ceil((double) produced_count / clus_size);
+
+    clus_list = malloc_zero(sizeof(struct cluster) * clus_num);
+
+    /* initialize cluster */
+    for (unit32_t i = 0; i < clus_num; ++i) {
+
+        struct cluster clus;
+
+        clus.centre = malloc_zero(sizeof(double) * user_count);
+        for (unit32_t j = 0; j < user_count; ++j) {
+            clus.centre[j] = get_point(j, i);
+        }
+
+        unit32_t size = sizeof(unit32_t) * produced_count;
+        clus.p_list = malloc(size);
+        memset(clus.p_list, -1, size);
+
+        clus.size = 0;
+
+        clus_list[i] = clus;
+
+        /* initialize cluster index list */
+        clus_index = malloc_zero(sizeof(unit32_t) * produced_count);
+    }
+
+    /* clustering */
+    while (1) {
+
+        /* reset cluster size */
+        for (unit32_t i = 0; i < clus_num; ++i)
+            clus_list[i].size = 0;
+
+        /* select cluster */
+        for (unit32_t i = 0; i < produced_count; ++i) {
+            double dis = -1;
+            unit32_t max_close = 0;
+            for (unit32_t j = 0; j < clus_num; ++j) {
+                double t_dis = get_distance(&clus_list[j], i);
+
+                if (dis == -1 || t_dis < dis) {
+                    dis = t_dis;
+                    max_close = j;
+                }
+            }
+            clus_list[max_close].p_list[clus_list[max_close].size] = i;
+            /* set cluster index */
+            set_clus_index(i, max_close);
+            ++clus_list[max_close].size;
+        }
+
+        /* calculate new centre */
+        unit8_t is_change = 0;
+        for (unit32_t n = 0; n < clus_num; ++n) {
+            struct cluster clus = clus_list[n];
+            /* temporary space for new centre */
+            double *new_centre = malloc_zero(sizeof(double) * user_count);
+            for (unit32_t i = 0; i < clus.size; ++i) {
+                for (unit32_t j = 0; j < user_count; ++j) {
+                    new_centre[j] += (double) get_point(j, clus.p_list[i]) / clus.size;
+                    }
+                }
+
+            if (update_centre(clus.centre, new_centre))
+                is_change = 1;
+            free(new_centre);
+        }
+
+        /* finish when all cluster's centre do not change */
+        if (is_change == 0)
+            break;
+    }
+
+    /* print clus size */
+    for (unit32_t i = 0; i < clus_num; ++i) {
+        struct cluster clus = clus_list[i];
+        char tmp[1024] = {0};
+        sprintf(tmp, "clus: %d, size: %d", i, clus.size);
+        log_info(tmp);
+    }
+
+}
+
+double mae_calcul();
+
 void recom_init() {
 
     init_user();
@@ -148,7 +263,17 @@ void recom_init() {
     init_recom_matrix();
     init_cache();
 
+    if (IS_KMEANS)
+        init_kmeans();
+
+    /* MAE caculate */
+    double mae = mae_calcul();
+
     if (IS_DEBUG) {
+        char maestr[10] = {0};
+        sprintf(maestr, "%f", mae);
+        log_info(maestr);
+
         for (unit32_t i = 0; i < user_count; ++i) {
             char *tstr = malloc_zero(sizeof(char) * (produced_count + 1) * 4);
             for (unit32_t j = 0; j < produced_count; ++j) {
@@ -169,250 +294,3 @@ void recom_init() {
     log_info("===== recommend initialized! =====");
 }
 
-unit32_t* get_signed_set(unit32_t p_index_x, unit32_t p_index_y, unit32_t *set_num) {
-
-    /* apply for space */
-    unit32_t size = sizeof(unit32_t) * user_count;
-    unit32_t *set = malloc(size);
-    memset(set, -1, size);
-
-    unit32_t *tp = set;
-    for (int i = 0; i < user_count; ++i) {
-        if (get_point(i, p_index_x) && get_point(i, p_index_y)) {
-            *tp = i;
-            ++tp;
-            *set_num += 1;
-        }
-    }
-
-    return set;
-}
-
-double get_pearson_similarity (unit32_t p_index_x, unit32_t p_index_y) {
-
-    /* find the set which be signed by both x and y */
-    unit32_t set_num = 0;
-    unit32_t *set = get_signed_set(p_index_x, p_index_y, &set_num);
-
-    if (set_num == 0) {
-        free(set);
-        return 0;
-    }
-
-    if (IS_DEBUG) {
-        log_info("set is not null");
-    }
-
-    /* get average value */
-    double sum_x = 0, sum_y = 0;
-    unit32_t tmp = set_num;
-    unit32_t *tp = set;
-    while (0 != tmp--) {
-        sum_x += get_point(*tp, p_index_x);
-        sum_y += get_point(*tp, p_index_y);
-        ++tp;
-    }
-    double ave_x = sum_x / set_num;
-    double ave_y = sum_y / set_num;
-
-    /* calculate pearson */
-    double numerator = 0, denominator1 = 0, denominator2 = 0;
-    tmp = set_num;
-    while (0 != tmp--){
-        double r_x = get_point(*set, p_index_x++);
-        double r_y = get_point(*set, p_index_y++);
-        numerator += (r_x - ave_x) * (r_y - ave_y);
-        denominator1 += (r_x - ave_x) * (r_x - ave_x);
-        denominator2 += (r_y - ave_y) * (r_y - ave_y);
-    }
-
-    /* free space of set */
-    free(set);
-
-    if (IS_DEBUG) {
-        char lt[1024] = {0};
-        sprintf(lt, "n:%f,d1:%f,d2:%f", numerator, denominator1, denominator2);
-        log_info(lt);
-    }
-
-    if (denominator1 == 0 || denominator2 == 0)
-        return 0;
-    else {
-        double pearson = numerator / sqrt(denominator1 * denominator2);
-        return pearson > 0 ? pearson : pearson * -1;
-    }
-}
-
-/* topN neighbor */
-#define TOP_N 10
-
-void get_top_n(struct nb_info **top_list, double *sim_list) {
-
-    *top_list = malloc_zero(sizeof(struct nb_info) * TOP_N);
-
-    struct nb_info *tail = *top_list + TOP_N - 1;
-    for (int i = 0; i < produced_count; ++i) {
-        struct nb_info *cmp = tail;
-        while (cmp != *top_list - 1 && sim_list[i] > cmp->pearson) {
-            struct nb_info tv = *cmp;
-            struct nb_info new;
-            new.p_index = i;
-            new.pearson = sim_list[i];
-            *cmp = new;
-            if (cmp != tail)
-                *(cmp + 1) = tv;
-            --cmp;
-        }
-    }
-}
-
-
-void set_neighbor_cache(unit32_t p_index, struct nb_info *neighbor) {
-
-    neighbor_cache[p_index] = neighbor;
-    if (IS_DEBUG)
-        log_info("set cache");
-}
-
-struct nb_info * get_neighbor_cache(unit32_t p_index) {
-
-    if (IS_DEBUG)
-        log_info("get from cache");
-    return neighbor_cache[p_index];
-}
-
-void get_neighbors(unit32_t p_index, struct nb_info **neighbors) {
-
-    *neighbors = get_neighbor_cache(p_index);
-
-    /* is cache ? */
-    if (!*neighbors) {
-
-        double *sim_list = malloc(sizeof(double) * produced_count);
-
-        /* calculate similarity one by one */
-        double *tp = sim_list;
-        for (int i = 0; i < produced_count; ++i) {
-            if (i == p_index)
-            /* exclude itself */
-                *tp = -1;
-            else {
-                /* get pearson similarity */
-                *tp = get_pearson_similarity(p_index, i);
-                if (IS_DEBUG) {
-                    char tmp[1024] = {0};
-                    sprintf(tmp, "pearson:%f", *tp);
-                    log_info(tmp);
-                }
-            }
-            ++tp;
-        }
-
-        /* get top n neighbors by pearson value */
-        get_top_n(neighbors, sim_list);
-
-        /* set cache */
-        set_neighbor_cache(p_index, *neighbors);
-
-        /* free space */
-        free(sim_list);
-    }
-}
-
-double get_estimate(unit32_t u_id, unit32_t p_index) {
-
-    /* exclude the produced */
-    if (get_point(get_u_index(u_id), p_index) != 0)
-        return 0;
-
-    /* get topN neighbor */
-    struct nb_info *neighbors = NULL;
-    get_neighbors(p_index, &neighbors);
-
-    /* calculate */
-    double estimate = 0;
-
-    int i = 0;
-    struct nb_info *tp = neighbors;
-    while (i < TOP_N) {
-        ++i;
-        if (tp->pearson == -1 || tp->pearson == 0)
-            break;
-        estimate += get_point(get_u_index(u_id), tp->p_index) * tp->pearson;
-        ++tp;
-    }
-
-    /* free space */
-    //free(neighbors);
-
-    return estimate / i;
-}
-
-double* get_estimate_list(unit32_t u_id) {
-
-    /* apply space */
-    double *est_list = malloc(sizeof(double) * produced_count);
-
-    /* get estimate value one by one */
-    double *tp = est_list;
-    for (int i = 0; i < produced_count; ++i, ++tp) {
-        *tp = get_estimate(u_id, i);
-        if (IS_DEBUG) {
-            char lt[1024] = {0};
-            sprintf(lt, "estimate:%f", *tp);
-            log_info(lt);
-        }
-    }
-
-    return est_list;
-}
-
-/* the count will recommend */
-#define RECOMMEND_N 10
-
-void get_recommend_str(const double *estimate, char *recomm_str) {
-
-    int recomms[RECOMMEND_N];
-    memset(recomms, -1, sizeof(int) * RECOMMEND_N);
-
-    unit32_t n = produced_count;
-
-    int *tail = recomms + RECOMMEND_N - 1;
-
-    for (unit32_t i = 0; i < produced_count; ++i) {
-        int *cmp = tail;
-        while (cmp != recomms - 1 && estimate[i] != 0 && estimate[i] > *cmp) {
-            unit32_t tmp = *cmp;
-            *cmp = i;
-            if (cmp != tail)
-                *(cmp + 1) = tmp;
-            --cmp;
-        }
-    }
-
-    for (unit32_t i = 0; i < RECOMMEND_N; ++i) {
-        if (recomms[i] == -1)
-            break;
-        char t_pid[20];
-        sprintf(t_pid, "%d", recomms[i]);
-        strcat(recomm_str, t_pid);
-        strcat(recomm_str, "|");
-    }
-}
-
-void get_recoms(unit32_t u_id, char *recoms) {
-
-    /* get produced estimate value list */
-    double *estimate = get_estimate_list(u_id);
-
-    /* get recommend string */
-    get_recommend_str(estimate, recoms);
-
-    /* free estimate list space */
-    free(estimate);
-}
-
-void save_recom(const char *msg) {
-
-    //TODO
-}

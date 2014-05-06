@@ -4,9 +4,16 @@ public class UserInfo {
 
 	private int id;
 
-	private String session_id;
+	private String sessionId;
 
 	private int status;
+
+	public UserInfo(int id, String sessionId) {
+
+		this.id = id;
+		this.sessionId = sessionId;
+		this.status = 1;
+	}
 
 	public int getId() {
 		return id;
@@ -17,11 +24,11 @@ public class UserInfo {
 	}
 
 	public String getSession_id() {
-		return session_id;
+		return sessionId;
 	}
 
 	public void setSession_id(String session_id) {
-		this.session_id = session_id;
+		this.sessionId = session_id;
 	}
 
 	public int getStatus() {

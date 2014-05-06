@@ -19,23 +19,24 @@ public class InfoDaoImpl implements IInfoDao {
 	public List<Integer> getList(InfoOrder order, int start, int num) {
 
 		List<Integer> list = new ArrayList<Integer>();
-		String sql = "SELECT ID FROM TRAVEL_INFO ORDER BY ? DESC LIMIT ?,?";
+		String sql = null;
+		if (order != null) {
+			if (order.equals(InfoOrder.CLICK))
+				sql = "SELECT ID FROM TRAVEL_INFO ORDER BY CLICK_NUM DESC LIMIT ?,?";
+			else if (order.equals(InfoOrder.POINT))
+				sql = "SELECT ID FROM TRAVEL_INFO ORDER BY LIKE_NUM DESC LIMIT ?,?";
+			else
+				sql = "SELECT ID FROM TRAVEL_INFO ORDER BY ID DESC LIMIT ?,?";
+		} else {
+			sql = "SELECT ID FROM TRAVEL_INFO ORDER BY ID DESC LIMIT ?,?";
+		}
 		Connection conn = DB.getConnection();
 		PreparedStatement statement = null;
 		ResultSet rs = null;
 		try {
 			statement = conn.prepareStatement(sql);
-			if (order != null) {
-				if (order.equals(InfoOrder.CLICK))
-					statement.setString(1, "CLICK_NUM");
-				else if (order.equals(InfoOrder.POINT))
-					statement.setString(1, "LIKE_NUM");
-				else
-					statement.setString(1, "CLICK_NUM");
-			} else
-				statement.setString(1, "CLICK_NUM");
-			statement.setInt(2, start);
-			statement.setInt(3, num);
+			statement.setInt(1, start);
+			statement.setInt(2, num);
 			rs = statement.executeQuery();
 			while (rs.next()) {
 				list.add(rs.getInt("ID"));
@@ -70,14 +71,17 @@ public class InfoDaoImpl implements IInfoDao {
 			while (rs.next()) {
 				e = new TravelInfo(id, rs.getString("NAME"),
 						rs.getString("CONTENT"), rs.getString("IMAGE_PATH"),
+						rs.getInt("CLICK_NUM"), rs.getInt("LIKE_NUM"),
 						rs.getInt("STATUS"));
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {
 			try {
-				rs.close();
-				statement.close();
+				if (rs != null)
+					rs.close();
+				if (statement != null)
+					statement.close();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -87,14 +91,44 @@ public class InfoDaoImpl implements IInfoDao {
 
 	@Override
 	public void incrClick(int id) {
-		// TODO Auto-generated method stub
 
+		String sql = "UPDATE TRAVEL_INFO SET CLICK_NUM = CLICK_NUM + 1 WHERE ID = ?";
+		Connection conn = DB.getConnection();
+		PreparedStatement statement = null;
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setInt(1, id);
+			statement.execute();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				statement.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
 	}
 
 	@Override
 	public void incrLike(int id) {
-		// TODO Auto-generated method stub
 
+		String sql = "UPDATE TRAVEL_INFO SET LIKE_NUM = LIKE_NUM + 1 WHERE ID = ?";
+		Connection conn = DB.getConnection();
+		PreparedStatement statement = null;
+		try {
+			statement = conn.prepareStatement(sql);
+			statement.setInt(1, id);
+			statement.execute();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				statement.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
 	}
 
 }

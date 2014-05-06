@@ -16,7 +16,7 @@ public interface IInfoService {
 	 * @return
 	 */
 	public List<TravelInfo> getList(InfoOrder order, int page, int pageSize);
-	
+
 	/**
 	 * 获取景点详情
 	 * 
@@ -33,4 +33,11 @@ public interface IInfoService {
 	 * @return
 	 */
 	public List<TravelInfo> getRecoms(String sessionId);
+
+	/**
+	 * 提高项目喜欢数
+	 * 
+	 * @param uId
+	 */
+	public void incrLike(int id);
 }

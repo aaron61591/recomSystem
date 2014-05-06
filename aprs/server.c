@@ -7,6 +7,7 @@
 
 #include "comm/mybase.h"
 #include "recom.h"
+#include "calcul.h"
 #include "init.h"
 
 /* aprs server listen port */

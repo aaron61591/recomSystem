@@ -11,11 +11,13 @@ public interface IUserDao {
 	 * @return
 	 */
 	public UserInfo getOne(String sessionId);
-	
+
 	/**
 	 * 添加用户
 	 * 
 	 * @param sessionId
+	 * @return
 	 */
 	public void addOne(String sessionId);
+
 }

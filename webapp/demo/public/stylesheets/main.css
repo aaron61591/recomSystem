@@ -3,24 +3,77 @@ main {
 	//font-family:"微软雅黑,宋体";
 	background-color: #73CCFF;
 	//background-image : url(../image/background.png);
-	height: 1100px;
+	//height: 1100px;
 	width: 100%;
+}
+
+head_decorate {
+	position: relative;
+	right: 120px;
+	bottom: 30px;
+	height: 80px;
+	//background-color: #FFB5A1;
+	width: 15%;
+	float: left;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
 }
 
 header {
 	margin-top: 30px;
-	margin-left: 15%;
+	//margin-left: 15%;
 	//background-color: black;
 	height: 50px;
 	width: 55%;
 	float: left;
 }
 
+decorate {
+	margin-top: 30px;
+	clear: left;
+	//background-color: black;
+	width: 15%;
+	float: left;
+}
+
+decorate1 {
+	position: relative;
+	right: 30px;
+	background-color: #B8F4FF;
+	height: 250px;
+	width: 30%;
+	float: left;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+}
+
+decorate2 {
+	position: relative;
+	right: 45px;
+	top: 15px;
+	clear: left;
+	background-color: #B8FFB8;
+	height: 380px;
+	width: 60%;
+	float: left;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+}
+
 show {
 	margin-top: 10px;
+	background-color: #FFFFFF;
+	//height: 1000px;
+	width: 55%;
+	float: left;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+}
+
+detail {
+	margin-top: 10px;
 	margin-left: 15%;
-	background-color: #FFFFEF;
-	height: 1000px;
+	//background-color: #FFFFEF;
 	width: 55%;
 	float: left;
 	-moz-border-radius: 20px;
@@ -29,9 +82,10 @@ show {
 
 recommend {
 	margin-top: 40px;
-	margin-left: 3%;
+	margin-left: 4%;
 	//background-color: #B5EF9B;
-	background-color: #FFFFEF;
+	background-color: #FFFFDA;
+	//background-color: #FFFFFF;
 	height: 550px;
 	width: 20%;
 	float: left;
@@ -175,4 +229,50 @@ recom_detail {
 	height: 70%;
 	float: left;
 	//background-color: green;
+}
+
+detail_title {
+	margin-top: 13px;
+	padding-top: 30px;
+	margin-left: 2%;
+	width: 96%;
+	float: left;
+	//background-color: #FEEEEE;
+	height: 60px;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+}
+
+detail_img {
+	margin-left: 2%;
+	width: 96%;
+	float: left;
+	//background-color: green;
+	height: 250px;
+}
+
+detail_content {
+	padding-top: 20px;
+	padding-bottom: 100px;
+	padding-left: 4%;
+	padding-right: 4%;
+	margin-left: 2%;
+	margin-bottom: 13px;
+	width: 88%;
+	float: left;
+	//background-color: #FEEEEE;
+	font-size: 16px;
+	color: #444444;
+	letter-spacing: 2px;
+	text-indent: 40px;
+	line-height: 35px;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+}
+
+.detail_like {
+	margin-bottom: 15px;
+	margin-left: 30px;
+	width: 25px;
+	height: 25px;
 }

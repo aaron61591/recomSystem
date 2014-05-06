@@ -12,9 +12,20 @@ public class TravelInfo implements Serializable {
 	private static final int contentNum = 100;
 
 	/**
+	 * 推荐景点详情显示的字数
+	 */
+	private static final int contentRemNum = 20;
+
+	/**
 	 * 景点名称显示字数
 	 */
 	private static final int nameNum = 10;
+
+
+	/**
+	 * 推荐景点名称显示字数
+	 */
+	private static final int nameRemNum = 4;
 
 	/**
 	 * 景点id
@@ -52,12 +63,14 @@ public class TravelInfo implements Serializable {
 	private int status;
 
 	public TravelInfo(int id, String name, String content, String imagePath,
-			int status) {
+			int clickNum, int likeNum, int status) {
 
 		this.id = id;
 		this.name = name;
 		this.content = content;
 		this.imagePath = imagePath;
+		this.clickNum = clickNum;
+		this.likeNum = likeNum;
 		this.status = status;
 	}
 
@@ -81,6 +94,14 @@ public class TravelInfo implements Serializable {
 			return getName();
 	}
 
+	public String getRemName() {
+		String t = this.name;
+		if (this.name.length() > nameRemNum)
+			return t.substring(0, nameRemNum) + "...";
+		else
+			return getName();
+	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -89,6 +110,14 @@ public class TravelInfo implements Serializable {
 		String t = this.content;
 		if (this.content.length() > contentNum)
 			return t.substring(0, contentNum) + "...";
+		else
+			return getContent();
+	}
+
+	public String getRemContent() {
+		String t = this.content;
+		if (this.content.length() > contentRemNum)
+			return t.substring(0, contentRemNum) + "...";
 		else
 			return getContent();
 	}

@@ -1,9 +1,8 @@
+#b recom.c:init_keans
+b recom.c:250
 #b recom.c:recom_init
-#b recom.c:get_signed_set
-#b recom.c:get_pearson_similarity
-#b recom.c:get_top_n
-b recom.c:get_neighbors
-#b recom.c:get_estimate
+#b calcul.c:get_estimate
+#b calcul.c:mae_calcul
 #b recom.c:get_estimate_list
 #b recom.c:get_recommend_str
 #b recom.c:get_recoms

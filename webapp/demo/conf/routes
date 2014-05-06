@@ -5,11 +5,14 @@
 # Home page
 GET     /                                       FrontendController.index
 GET     /index                                  FrontendController.index
+GET     /detail                                 FrontendController.detail
+GET		/like									RecomController.like
+GET		/reRecom								RecomController.reRecom
 
 # Map static resources from the /app/public folder to the /public path
 GET     /anniversary/public/                    staticDir:public
-GET		/css									staticDir:public/stylesheets
-GET		/image									staticDir:public/images
+GET		/css/									staticDir:public/stylesheets
+GET		/image/									staticDir:public/images
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
