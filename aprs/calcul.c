@@ -287,9 +287,9 @@ void save_recom(const char *msg) {
     /* TODO */
 }
 
-const unit32_t calcul_u_num = 800;
+const unit32_t calcul_u_num = 900;
 
-const unit32_t calcul_p_num = 1000;
+const unit32_t calcul_p_num = 1600;
 
 double mae_calcul() {
 

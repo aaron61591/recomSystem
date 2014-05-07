@@ -1,12 +1,13 @@
 #b recom.c:init_keans
-b recom.c:250
-#b recom.c:recom_init
+#b recom.c:250
+b recom.c:recom_init
 #b calcul.c:get_estimate
 #b calcul.c:mae_calcul
 #b recom.c:get_estimate_list
 #b recom.c:get_recommend_str
 #b recom.c:get_recoms
 #b server.c:get_respon
+#b server.c:main
 #b recom.c:get_neighbors
 set follow-fork-mode child
 set detach-on-fork off

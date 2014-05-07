@@ -47,7 +47,7 @@ if (is_dir($dir)) {
                         $query = "INSERT INTO TRAVEL_INFO (NAME, CONTENT, IMAGE_PATH, STATUS) VALUES ('$name', '$con', '$image', '$status')";
                         //$query = "INSERT INTO TRAVEL_INFO (NAME, CONTENT, IMAGE_PATH, STATUS) VALUES ('中文', '中文', '$image', '$status')";
                         mysql_query($query);
-                        echo $query . "\n";
+                        //echo $query . "\n";
                     } else {
                         echo "error json!" . "name:" . $name . ",con:" . $con . ",image:" . $image . "\n";
                     }

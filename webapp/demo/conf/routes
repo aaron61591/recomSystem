@@ -13,6 +13,7 @@ GET		/reRecom								RecomController.reRecom
 GET     /anniversary/public/                    staticDir:public
 GET		/css/									staticDir:public/stylesheets
 GET		/image/									staticDir:public/images
+GET		/pic/									staticDir:public/images/info
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

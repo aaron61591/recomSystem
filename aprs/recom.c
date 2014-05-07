@@ -266,10 +266,10 @@ void recom_init() {
     if (IS_KMEANS)
         init_kmeans();
 
-    /* MAE caculate */
-    double mae = mae_calcul();
-
     if (IS_DEBUG) {
+        /* MAE caculate */
+        double mae = mae_calcul();
+
         char maestr[10] = {0};
         sprintf(maestr, "%f", mae);
         log_info(maestr);

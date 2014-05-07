@@ -1,6 +1,6 @@
 <?php
 
-    $type = 2;
+    $type = 1;
 
     $con = mysql_connect("localhost","root","root");
     if (!$con)
@@ -8,7 +8,7 @@
         die('Could not connect: ' . mysql_error());
     }
 
-    mysql_select_db("aprs", $con);
+    mysql_select_db("aprs_test", $con);
 
     switch ($type) {
         case 0:

@@ -28,16 +28,16 @@
 				`if (detail == null) {
 				<info_opt>
 					<opt_font1>旅游景点：</opt_font1>
-					<a href="http://localhost:9000/index?order=POINT"><opt_font2>好评</opt_font2></a>
-					<a href="http://localhost:9000/index?order=CLICK"><opt_font2>热度</opt_font2></a>
-					<a href="http://localhost:9000/index?order=TIME"><opt_font2>时间</opt_font2></a>
+					<a href="../index?order=POINT"><opt_font2>好评</opt_font2></a>
+					<a href="../index?order=CLICK"><opt_font2>热度</opt_font2></a>
+					<a href="../index?order=TIME"><opt_font2>时间</opt_font2></a>
 				</info_opt>
 				`if (list != null)
 				`for(int i = 0; i < list.size(); ++i) {
 					`if (list.get(i) != null) {
 					<info>
 						<picture>
-							<img class="info_img" src="${list.get(i).getImagePath()}"/>
+							<img class="info_img" src="../pic/${list.get(i).getImagePath()}"/>
 						</picture>
 						<content>
 							<a href="../detail?id=${list.get(i).getId()}"><detail_head>${list.get(i).getShowName()}</detail_head></a>
@@ -72,7 +72,7 @@
 						</a>
 					</detail_title>
 					<detail_img>
-						<img style="height: 100%; width: 500px; margin-left: 30px;" src="${detail.getImagePath()}"/>
+						<img style="height: 100%; width: 500px; margin-left: 30px;" src="../pic/${detail.getImagePath()}"/>
 					</detail_img>
 					<detail_content>${detail.getContent()}</detail_content>
 				`}
@@ -92,7 +92,7 @@
 					`if (recoms.get(i) != null) {	
 					<recom_info>
 						<recom_image>
-							<img class="info_img" src="${recoms.get(i).getImagePath()}"/>
+							<img class="info_img" src="../pic/${recoms.get(i).getImagePath()}"/>
 						</recom_image>
 						<recom_title>
 							<a href="../detail?id=${recoms.get(i).getId()}">

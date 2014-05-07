@@ -113,9 +113,9 @@ p(" \n");// line 2
 		if (detail == null) {// line 28
 		p("				<info_opt>\n" + 
 "					<opt_font1>旅游景点：</opt_font1>\n" + 
-"					<a href=\"http://localhost:9000/index?order=POINT\"><opt_font2>好评</opt_font2></a>\n" + 
-"					<a href=\"http://localhost:9000/index?order=CLICK\"><opt_font2>热度</opt_font2></a>\n" + 
-"					<a href=\"http://localhost:9000/index?order=TIME\"><opt_font2>时间</opt_font2></a>\n" + 
+"					<a href=\"../index?order=POINT\"><opt_font2>好评</opt_font2></a>\n" + 
+"					<a href=\"../index?order=CLICK\"><opt_font2>热度</opt_font2></a>\n" + 
+"					<a href=\"../index?order=TIME\"><opt_font2>时间</opt_font2></a>\n" + 
 "				</info_opt>\n" + 
 "				");// line 28
 		if (list != null)// line 35
@@ -125,7 +125,7 @@ p(" \n");// line 2
 		if (list.get(i) != null) {// line 37
 		p("					<info>\n" + 
 "						<picture>\n" + 
-"							<img class=\"info_img\" src=\"");// line 37
+"							<img class=\"info_img\" src=\"../pic/");// line 37
 		p(list.get(i).getImagePath());// line 40
 		p("\"/>\n" + 
 "						</picture>\n" + 
@@ -194,7 +194,7 @@ p(" \n");// line 2
 "						</a>\n" + 
 "					</detail_title>\n" + 
 "					<detail_img>\n" + 
-"						<img style=\"height: 100%; width: 500px; margin-left: 30px;\" src=\"");// line 69
+"						<img style=\"height: 100%; width: 500px; margin-left: 30px;\" src=\"../pic/");// line 69
 		p(detail.getImagePath());// line 75
 		p("\"/>\n" + 
 "					</detail_img>\n" + 
@@ -231,7 +231,7 @@ p(" \n");// line 2
 		if (recoms.get(i) != null) {// line 92
 		p("					<recom_info>\n" + 
 "						<recom_image>\n" + 
-"							<img class=\"info_img\" src=\"");// line 92
+"							<img class=\"info_img\" src=\"../pic/");// line 92
 		p(recoms.get(i).getImagePath());// line 95
 		p("\"/>\n" + 
 "						</recom_image>\n" + 

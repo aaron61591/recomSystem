@@ -11,7 +11,7 @@
 
 #define REFRESH_TIME 15 * 60
 
-#define IS_KMEANS 0
+#define IS_KMEANS 1
 
 /* user, produced list */
 unit32_t *user_list, *produced_list;
