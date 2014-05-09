@@ -1,2 +1,10 @@
-2014-5-7 8:6:57 4612 [info] log initailized!
-2014-5-7 8:6:57 4612 [info] log initialized!
+2014-5-9 19:10:20 10289 [info] log initailized!
+2014-5-9 19:10:20 10289 [info] log initialized!
+2014-5-9 19:10:22 10289 [info] clus: 0, size: 42
+2014-5-9 19:10:22 10289 [info] clus: 1, size: 349
+2014-5-9 19:10:22 10289 [info] clus: 2, size: 1197
+2014-5-9 19:10:22 10289 [info] clus: 3, size: 94
+2014-5-9 19:13:52 10289 [info] final mae: 0.690011, speed:0.233333
+2014-5-9 19:13:52 10289 [info] nan
+2014-5-9 19:13:52 10289 [info] ===== recommend initialized! =====
+2014-5-9 19:13:52 10289 [info] recommand initialized!

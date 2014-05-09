@@ -11,6 +11,8 @@
 
 #define REFRESH_TIME 15 * 60
 
+#define IS_MAE 1
+
 #define IS_KMEANS 1
 
 /* user, produced list */
@@ -72,6 +74,6 @@ unit8_t get_point(unit32_t u_index, unit32_t p_index);
 void set_point(unit32_t u_index, unit32_t p_index, unit8_t point);
 
 /* get user's index*/
-int get_u_index(unit32_t u_id);
+unit32_t get_u_index(unit32_t u_id);
 
 #endif

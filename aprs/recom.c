@@ -52,7 +52,7 @@ void init_produced() {
 }
 
 /* the performance can be better */
-int get_u_index(unit32_t u_id) {
+unit32_t get_u_index(unit32_t u_id) {
 
     if (u_id > max_u_id)
         return 0;
@@ -61,7 +61,7 @@ int get_u_index(unit32_t u_id) {
 }
 
 /* the performance can be better */
-int get_p_index(unit32_t p_id) {
+unit32_t get_p_index(unit32_t p_id) {
 
     if (p_id > max_p_id)
         return 0;
@@ -127,6 +127,15 @@ void recom_refresh (int signo) {
     free(produced_list);
     free(produced_index);
     free(recom_matrix);
+    if (IS_KMEANS) {
+        free(clus_index);
+        for (unit32_t i = 0; i < clus_num; ++i) {
+            struct cluster clus = clus_list[i];
+            free(clus.centre);
+            free(clus.p_list);
+        }
+        free(clus_list);
+    }
     for (unit32_t i = 0; i < produced_count; ++i) {
         if (neighbor_cache[i] != NULL)
             free(neighbor_cache[i]);
@@ -266,13 +275,15 @@ void recom_init() {
     if (IS_KMEANS)
         init_kmeans();
 
-    if (IS_DEBUG) {
-        /* MAE caculate */
+    /* MAE caculate */
+    if (IS_MAE) {
         double mae = mae_calcul();
-
         char maestr[10] = {0};
         sprintf(maestr, "%f", mae);
         log_info(maestr);
+    }
+
+    if (IS_DEBUG) {
 
         for (unit32_t i = 0; i < user_count; ++i) {
             char *tstr = malloc_zero(sizeof(char) * (produced_count + 1) * 4);

@@ -32,6 +32,6 @@ typedef unsigned int unit32_t;
 #define DATELEN 30
 
 /* if debug mode (print debug log) */
-#define IS_DEBUG 0
+#define IS_DEBUG 1
 
 #endif

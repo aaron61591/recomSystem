@@ -115,10 +115,21 @@ void get_top_n(struct nb_info **top_list, double *sim_list, unit32_t p_index) {
                 new.p_index = i;
                 new.pearson = sim_list[i];
                 *cmp = new;
-                if (cmp != tail)
+                if (cmp != tail) {
                     *(cmp + 1) = tv;
+                }
                 --cmp;
             }
+        }
+    }
+
+    if (IS_DEBUG) {
+        struct nb_info *t = *top_list;
+        for (unit32_t i = 0; i < TOP_N; ++i) {
+            char tmp[1024] = {0};
+            sprintf(tmp, "top_n i: %d, p: %d", i, t->p_index);
+            log_info(tmp);
+            ++t;
         }
     }
 }
@@ -133,8 +144,6 @@ void set_neighbor_cache(unit32_t p_index, struct nb_info *neighbor) {
 
 struct nb_info * get_neighbor_cache(unit32_t p_index) {
 
-    if (IS_DEBUG)
-        log_info("get from cache");
     return neighbor_cache[p_index];
 }
 
@@ -144,6 +153,9 @@ void get_neighbors(unit32_t p_index, struct nb_info **neighbors) {
 
     /* is cache ? */
     if (!*neighbors) {
+
+        if (IS_DEBUG)
+            log_info("cache is empty!");
 
         double *sim_list = malloc_zero(sizeof(double) * produced_count);
 
@@ -158,6 +170,12 @@ void get_neighbors(unit32_t p_index, struct nb_info **neighbors) {
                 else
                     /* get pearson similarity */
                     *tp = get_pearson_similarity(p_index, clus_list[c_id].p_list[i]);
+                if (IS_DEBUG) {
+                    char tmp[1024] = {0};
+                    sprintf(tmp, "pearson: %lf", *tp);
+                    log_info(tmp);
+                }
+                ++tp;
             }
         } else {
             for (int i = 0; i < produced_count; ++i) {
@@ -167,6 +185,11 @@ void get_neighbors(unit32_t p_index, struct nb_info **neighbors) {
                 else
                     /* get pearson similarity */
                     *tp = get_pearson_similarity(p_index, i);
+                if (IS_DEBUG) {
+                    char tmp[1024] = {0};
+                    sprintf(tmp, "pearson: %lf", *tp);
+                    log_info(tmp);
+                }
                 ++tp;
             }
         }
@@ -206,10 +229,19 @@ double get_estimate(unit32_t u_id, unit32_t p_index) {
     while (i < TOP_N) {
         if (tp->pearson == -1 || tp->pearson == 0)
             break;
-        numerator += (get_point(u_index, tp->p_index) - get_average_estimate(tp->p_index)) * tp->pearson;
+        double differ = get_point(u_index, tp->p_index) - get_average_estimate(tp->p_index);
+        if (differ < 0)
+            differ *= -1;
+        numerator += differ * tp->pearson;
         denominator += tp->pearson;
         ++tp;
         ++i;
+    }
+
+    if (IS_DEBUG) {
+        char tmp[1024] = {0};
+        sprintf(tmp, "i: %d, numerator: %lf, denominator: %lf, ave: %lf", i, numerator, denominator, get_average_estimate(p_index));
+        log_info(tmp);
     }
 
     if (denominator == 0)
@@ -229,7 +261,7 @@ double* get_estimate_list(unit32_t u_id) {
         *tp = get_estimate(u_id, i);
         if (IS_DEBUG) {
             char lt[1024] = {0};
-            sprintf(lt, "estimate:%f", *tp);
+            sprintf(lt, "u: %d, p: %d, estimate:%f", u_id, i, *tp);
             log_info(lt);
         }
     }
@@ -242,16 +274,16 @@ double* get_estimate_list(unit32_t u_id) {
 
 void get_recommend_str(const double *estimate, char *recomm_str) {
 
-    int recomms[RECOMMEND_N];
+    unit32_t recomms[RECOMMEND_N];
     memset(recomms, -1, sizeof(int) * RECOMMEND_N);
 
     unit32_t n = produced_count;
 
-    int *tail = recomms + RECOMMEND_N - 1;
+    unit32_t *tail = recomms + RECOMMEND_N - 1;
 
     for (unit32_t i = 0; i < produced_count; ++i) {
-        int *cmp = tail;
-        while (cmp != recomms - 1 && estimate[i] != 0 && estimate[i] > *cmp) {
+        unit32_t *cmp = tail;
+        while (cmp != recomms - 1 && estimate[i] != 0 && estimate[i] > estimate[*cmp]) {
             unit32_t tmp = *cmp;
             *cmp = i;
             if (cmp != tail)
@@ -263,8 +295,8 @@ void get_recommend_str(const double *estimate, char *recomm_str) {
     for (unit32_t i = 0; i < RECOMMEND_N; ++i) {
         if (recomms[i] == -1)
             break;
-        char t_pid[20];
-        sprintf(t_pid, "%d", recomms[i]);
+        char t_pid[1024];
+        sprintf(t_pid, "%d", produced_list[recomms[i]]);
         strcat(recomm_str, t_pid);
         strcat(recomm_str, "|");
     }
@@ -304,7 +336,13 @@ double mae_calcul() {
         double mae = 0;
         /* get one mae */
         for (unit32_t p_index = 0; p_index < calcul_p_num; ++p_index) {
-            double t = get_estimate(u_id, p_index) - get_point(get_u_index(u_id), p_index);
+            double estimate = get_estimate(u_id, p_index);
+            if (IS_DEBUG) {
+                char lt[1024] = {0};
+                sprintf(lt, "u: %d, p: %d, estimate: %lf", u_id, p_index, estimate);
+                log_info(lt);
+            }
+            double t = estimate - get_point(get_u_index(u_id), p_index);
             if (t < 0)
                 t *= -1;
             mae += t / calcul_p_num;

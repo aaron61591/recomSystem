@@ -42,6 +42,11 @@ void get_respon(const char *msg, char *resp) {
         const char *num = msg;
         num += 2;
         get_recoms(atoi(num), resp);
+        if (IS_DEBUG) {
+            char tmp[1024] = {0};
+            sprintf(tmp, "request: %d, response: %s", atoi(num), resp);
+            log_info(tmp);
+        }
     } else if(type == 1) {
         /* save useraction */
         save_recom(msg);
